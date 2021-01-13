@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 
-const userSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     origin: {
         type: Array,
         required: true,
@@ -35,6 +35,6 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-const Order = mongoose.model('Order', userSchema)
+const Order = mongoose.model('Order', orderSchema)
 
 module.exports = Order
