@@ -2,7 +2,7 @@ const express = require('express')
 const Order = require('../model/order')
 const router = new express.Router()
 
-router.post('/order', async (req, res) => {
+router.post('/orders', async (req, res) => {
     const order = new Order(req.body)
     order.status = "UNASSIGNED"
 
