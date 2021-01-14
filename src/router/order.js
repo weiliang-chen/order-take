@@ -22,6 +22,9 @@ router.patch('/orders/:id', async (req, res) => {
         }
 
         if (req.body.status == "TAKEN") {
+            if (order.status == "SUCCESS") {
+                return res.status(400).send({ Error: 'Order has been taken'})
+            }
             order.status = 'SUCCESS'
             await order.save()
             res.status(200).send(order)
