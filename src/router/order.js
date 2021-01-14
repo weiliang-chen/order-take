@@ -21,7 +21,7 @@ router.patch('/orders/:id', async (req, res) => {
             return res.status(404).send({ error: 'order not exist'})
         }
 
-        if (req.status === 'TAKEN') {
+        if (req.body.status == "TAKEN") {
             order.status = 'SUCCESS'
             await order.save()
             res.status(200).send(order)
