@@ -42,7 +42,7 @@ router.get('/orders', async (req, res) => {
         const limit = parseInt(req.query.limit)
         const page = parseInt(req.query.page)
         
-        const order = await Order.find({}).skip(page).limit(limit)
+        const order = await Order.find({}).skip(page-1).limit(limit)
         res.status(200).send(order)
 
     } catch (e) {
