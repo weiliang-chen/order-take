@@ -10,7 +10,7 @@ router.post('/orders', async (req, res) => {
         await order.save()
         res.status(200).send({ id: order.id, status: order.status})
     } catch (e) {
-        res.status(500).send({error: 'Something went wrong'})
+        res.status(400).send({error: e.message})
     }
 })
 
@@ -38,8 +38,12 @@ router.patch('/orders/:id', async (req, res) => {
 
 router.get('/orders', async (req, res) => {
     try {
+        if (!Number.isInteger(Number(req.query.page)) || !Number.isInteger(Number(req.query.limit))) {
+            return res.status(400).send({ Error: "page or limit must be an integer"})
+        }
+        
         if (req.query.page < 1) {
-            res.status(400).send({ Error: "page number must greater than 0"})
+            return res.status(400).send({ Error: "page number must greater than 0"})
         }
 
         const limit = parseInt(req.query.limit)

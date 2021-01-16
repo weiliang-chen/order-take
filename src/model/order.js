@@ -7,12 +7,8 @@ const orderSchema = new mongoose.Schema({
         required: true,
         length: 2,
         validate (value) {
-            if (typeof value[0] !== "string" || typeof value[1] !== "string") {
-                throw new Error('Please enter correct coordinate')                
-            }
-
-            if (!validator.isLatLong(value[0] +","+ value[1])) {
-                throw new Error('Please enter correct coordinate')
+            if (!validate_latlong(value)) {
+                throw new Error('Please enter correct coordinate')    
             }
         }       
     },
@@ -21,12 +17,8 @@ const orderSchema = new mongoose.Schema({
         required: true,
         length: 2,
         validate (value) {
-            if (typeof value[0] !== "string" || typeof value[1] !== "string") {
-                throw new Error('Please enter correct coordinate')                
-            }
-
-            if (!validator.isLatLong(value[0] +","+ value[1])) {
-                throw new Error('Please enter correct coordinate')
+            if (!validate_latlong(value)) {
+                throw new Error('Please enter correct coordinate')    
             }
         }    
     },
@@ -36,5 +28,17 @@ const orderSchema = new mongoose.Schema({
 })
 
 const Order = mongoose.model('Order', orderSchema)
+
+function validate_latlong(value) {
+    if (typeof value[0] !== "string" || typeof value[1] !== "string") {
+        return false              
+    }
+
+    if (!validator.isLatLong(value[0] +","+ value[1])) {
+        return false
+    }
+
+    return true
+}
 
 module.exports = Order
