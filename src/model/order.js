@@ -24,10 +24,11 @@ const orderSchema = new mongoose.Schema({
     },
     status: {
         type: String
+    },
+    distance: {
+        type: String
     }
 })
-
-const Order = mongoose.model('Order', orderSchema)
 
 function validate_latlong(value) {
     if (typeof value[0] !== "string" || typeof value[1] !== "string") {
@@ -40,5 +41,16 @@ function validate_latlong(value) {
 
     return true
 }
+
+orderSchema.methods.toJSON = function () {
+    const order = this
+    const orderObject = order.toObject()
+
+    delete orderObject.__v
+
+    return orderObject
+}
+
+const Order = mongoose.model('Order', orderSchema)
 
 module.exports = Order

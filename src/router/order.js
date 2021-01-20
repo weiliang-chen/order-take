@@ -1,21 +1,25 @@
 const express = require('express')
 const Order = require('../model/order')
 const router = new express.Router()
+const distance = require('../../utils/map')
 
 router.post('/orders', async (req, res) => {
-    const order = new Order(req.body)
-    order.status = "UNASSIGNED"
-
     try {
-        await order.save()
-        res.status(200).send({ id: order.id, status: order.status})
+        distance(Number(req.body.origin[0]), Number(req.body.origin[1]), Number(req.body.destination[0]), Number(req.body.destination[1]), (error, data) => {
+        var order = new Order(req.body)
+        order.distance = data.distance
+        order.status = "UNASSIGNED"
+
+        order.save()
+        res.status(200).send(order)
+    })      
     } catch (e) {
         res.status(400).send({error: e.message})
     }
 })
 
 router.patch('/orders/:id', async (req, res) => {
-    try{
+    try {
         const order = await Order.findOne({ _id: req.params.id })
         if (!order) {
             return res.status(404).send({ error: 'order not exist'})
@@ -36,10 +40,32 @@ router.patch('/orders/:id', async (req, res) => {
     }
 })
 
+router.get('/orders/:id', async(req, res) => {
+    try {
+        const order = await Order.findOne({ _id: req.params.id }) 
+        if (!order) {
+            return res.status(404).send({ error: 'order not exist'})
+        }
+
+        res.status(200).send(order)
+
+    } catch (e) {
+        res.status(500).send(e)
+    }
+})
+
 router.get('/orders', async (req, res) => {
     try {
-        if (!Number.isInteger(Number(req.query.page)) || !Number.isInteger(Number(req.query.limit))) {
-            return res.status(400).send({ Error: "page or limit must be an integer"})
+        if (req.query.page) {
+            if (!Number.isInteger(Number(req.query.page))) {
+                return res.status(400).send({ Error: "page or limit must be an integer"})
+            }
+        }
+
+        if (req.query.limit) {
+            if (!Number.isInteger(Number(req.query.limit))) {
+                return res.status(400).send({ Error: "page or limit must be an integer"})
+            }
         }
         
         if (req.query.page < 1) {
