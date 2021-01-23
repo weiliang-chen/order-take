@@ -11,10 +11,11 @@ const distance = (lat1, long1, lat2, long2, callback) => {
         } else {
             callback(undefined, {
                 distance: body.rows[0].elements[0].distance.text                  
-            })  
+            })
         }
     })
 }
+
 
 module.exports = distance
 

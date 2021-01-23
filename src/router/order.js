@@ -4,17 +4,22 @@ const router = new express.Router()
 const distance = require('../../utils/map')
 
 router.post('/orders', async (req, res) => {
-    try {
+    function createorder (order) {
         distance(Number(req.body.origin[0]), Number(req.body.origin[1]), Number(req.body.destination[0]), Number(req.body.destination[1]), (error, data) => {
+            if (error) {
+                return res.status(400).send({ Error: error})
+            }
+            order.distance = data.distance
+            order.save()
+            return res.status(200).send(order)
+        })
+    }
+    try {
         var order = new Order(req.body)
-        order.distance = data.distance
         order.status = "UNASSIGNED"
-
-        order.save()
-        res.status(200).send(order)
-    })      
-    } catch (e) {
-        res.status(400).send({error: e.message})
+        createorder(order)      
+    } catch (Error) {
+        res.status(400).send({error: Error.message})
     }
 })
 
