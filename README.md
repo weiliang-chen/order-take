@@ -12,12 +12,12 @@ require request body in JSON
 "destination" is the destination place of the order.
 
 example body:
-{
-
-  "origin": ["39.9222","117.2014"],
+     
+    {
+     "origin": ["39.9222","117.2014"],
   
-  "destination" : ["39.9156", "116.4074"]
-}
+     "destination" : ["39.9156", "116.4074"]
+    }
 
 if order is created successed, it will return status 200OK and response.
 
@@ -41,6 +41,7 @@ response:
     
     "distance": "105 km"
     }
+    
 "origin" is the origin place of the order. 
 
 "destination" is the destination place of the order.
@@ -59,9 +60,10 @@ Patch {{url}}/orders/:id
 
 require request body in JSON
 body:
-{
-  "status": "Taken"
-}
+
+    {
+    "status": "Taken"
+    }
 
 # get orders
 Get {{url}}/orders?page=:page&limit=:limit
