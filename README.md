@@ -5,12 +5,35 @@ This app uses googleMap api to calculate distance between two locations
 # create order
 Post {{url}}/orders
 
-require body in JSON
-body:
+require request body in JSON
+"origin" is the origin place of the order. 
+"destination" is the destination place of the order.
+example body:
 {
-  "origin": ["", ""],
-  "destination" : ["", ""]
+  "origin": ["39.9222","117.2014"],,
+  "destination" : ["39.9156", "116.4074"]
 }
+
+if order is created successed, it will return status 200OK and response.
+response:
+{
+ "origin": [
+        "39.9222",
+        "117.2014"
+    ],
+    "destination": [
+        "39.9156",
+        "116.4074"
+    ],
+    "_id": "601cedb16ddb5f0017a3a160",
+    "status": "UNASSIGNED",
+    "distance": "105 km"
+}
+"origin" is the origin place of the order. 
+"destination" is the destination place of the order.
+"_id" is the id of the order
+"status" is the current status of the order
+"distance" is the distance between origin place and destination place.
 
 # take order
 
@@ -18,7 +41,7 @@ Patch {{url}}/orders/:id
 
 :id is the id of the order you want to take
 
-require body in JSON
+require request body in JSON
 body:
 {
   "status": "Taken"
