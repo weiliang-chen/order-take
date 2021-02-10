@@ -1,6 +1,8 @@
 # order-api
 This app uses googleMap api to calculate distance between two locations
 
+The production url is https://order-order-a.herokuapp.com
+
 # Config
 Config setting are in order-delivery/config/dev.env
 
@@ -21,6 +23,7 @@ if it shows
      
 Then your local APi is set up.
 
+The url for local api : localhost:8080
 # create order
 Post {{url}}/orders
 
