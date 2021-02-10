@@ -1,7 +1,26 @@
 # order-api
 This app uses googleMap api to calculate distance between two locations
 
-## Usage
+# Config
+Config setting are in order-delivery/config/dev.env
+
+## To start up local API
+This app is using MongoDB for local database.
+
+First connect with your local MongoDB
+
+Then enter command
+
+```bash
+npm run dev
+```
+
+if it shows
+
+     Server is up on 8080
+     
+Then your local APi is set up.
+
 # create order
 Post {{url}}/orders
 
