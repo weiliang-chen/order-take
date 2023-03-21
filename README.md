@@ -1,4 +1,4 @@
-# order-api
+# order-take
 This app uses googleMap api to calculate distance between two locations
 
 The production url is https://order-order-a.herokuapp.com
